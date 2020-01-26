@@ -12,7 +12,7 @@ const Join = () => {
     const onSubmit: any = async ({ id, password }: TLogin) => {
         const instance = axios.create({
             baseURL: 'http://localhost:4000',
-            timeout: 5000
+            timeout: 3000
         })
         try {
             const responseData = await instance.post('/login', {

@@ -57,6 +57,14 @@ app.post('/join', (req, res, next) => {
         }
     )
 })
+app.get('/board/list', (req, res, next) => {
+    const sql = 'SELECT * FROM board WHERE id=?'
+    connection.query(sql, [req.query.id], (err, rows) => {
+        if (err) console.error(err)
+        res.set('Content-Type', 'application/json')
+        res.send(rows)
+    })
+})
 
 app.listen(app.get('port'), () => {
     console.log('server connect')
