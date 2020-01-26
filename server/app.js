@@ -20,6 +20,18 @@ app.use((req, res, next) => {
     next()
 })
 
+app.post('/login', (req, res, next) => {
+    const sql = 'SELECT * FROM user WHERE id=? AND password=?'
+    connection.query(sql, [req.body.id, req.body.password], (err, rows) => {
+        if (err || !rows.length) {
+            console.error('로그인이 실패했습니다.')
+            next()
+        } else {
+            res.set('Content-Type', 'application/json')
+            res.send({ status: 'SUCCESS' })
+        }
+    })
+})
 app.get('/join', (req, res, next) => {
     connection.query('SELECT * FROM user', (err, rows) => {
         if (err) console.error(err)

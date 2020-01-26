@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, Route } from 'react-router-dom'
 import './App.css'
+import Home from './containers/Home'
 import Join from './containers/Join'
 
 const App: React.FC = () => {
@@ -17,7 +18,7 @@ const App: React.FC = () => {
                 </ul>
             </nav>
             <div className="container">
-                <Route path="/" exact />
+                <Route path="/" exact component={Home} />
                 <Route path="/join" component={Join} />
             </div>
         </div>
