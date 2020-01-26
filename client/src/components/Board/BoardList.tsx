@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import moment from 'moment'
 
-const timeStamp = moment()
-    .toDate()
-    .getTime()
 const BoardList = () => {
     const [boardList, setBoardList] = useState([
-        { id: '', title: '', content: '', createdAt: '' }
+        { id: '', title: '', content: '', createdAt: '', timeStamp: '' }
     ])
     const fetchBoardList = async () => {
         const instance = axios.create({
@@ -24,7 +20,7 @@ const BoardList = () => {
                 params: boardListData
             })
             setBoardList(responseData.data)
-            return responseData
+            return responseData.data
         } catch (err) {
             console.error(err)
         }
@@ -39,7 +35,7 @@ const BoardList = () => {
             <article>
                 <ul>
                     {boardList.map(item => (
-                        <li key={timeStamp}>
+                        <li key={item.createdAt}>
                             <ul>
                                 <li>{item.id}</li>
                                 <li>{item.title}</li>

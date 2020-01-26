@@ -65,6 +65,19 @@ app.get('/board/list', (req, res, next) => {
         res.send(rows)
     })
 })
+app.post('/board/write', (req, res, next) => {
+    const sql =
+        'INSERT INTO board(id, title, content, createdAt) VALUES(?, ?, ?, ?)'
+    connection.query(
+        sql,
+        [req.body.id, req.body.title, req.body.content, req.body.createdAt],
+        (err, rows) => {
+            if (err) console.error(err)
+            res.set('Content-type', 'application/json')
+            res.send({ status: 'SUCCESS' })
+        }
+    )
+})
 
 app.listen(app.get('port'), () => {
     console.log('server connect')
