@@ -1,15 +1,19 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
+import moment from 'moment'
 
 const Join = () => {
     const { handleSubmit, register, errors }: any = useForm()
     const onSubmit = (values: any) => {
+        const date = moment()
+            .format()
+            .substr(0, 19)
         axios.post('http://localhost:4000/join', {
             id: values.id,
             password: values.password,
-            createdAt: '2020-01-25 17:34:59',
-            updatedAt: '2020-01-25 17:34:59'
+            createdAt: date,
+            updatedAt: date
         })
     }
 
