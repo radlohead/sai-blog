@@ -2,6 +2,7 @@ import React from 'react'
 import { Link, Route } from 'react-router-dom'
 import BoardList from '../components/Board/BoardList'
 import BoardWrite from '../components/Board/BoardWrite'
+import BoardView from '../components/Board/BoardView'
 
 const Board = () => {
     return (
@@ -24,6 +25,12 @@ const Board = () => {
                     </li>
                     <li>
                         <Route path="/board/write" component={BoardWrite} />
+                    </li>
+                    <li>
+                        <Route
+                            path="/board/view/:rowId"
+                            component={BoardView}
+                        />
                     </li>
                 </ul>
             </article>

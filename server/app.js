@@ -78,6 +78,14 @@ app.post('/board/write', (req, res, next) => {
         }
     )
 })
+app.get('/board/view/:rowId', (req, res, next) => {
+    const sql = `SELECT * FROM board WHERE rowId=?`
+    connection.query(sql, [req.params.rowId], (err, rows) => {
+        if (err) console.error(err)
+        res.set('Content-Type', 'application/json')
+        res.send(rows)
+    })
+})
 
 app.listen(app.get('port'), () => {
     console.log('server connect')

@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 const BoardList = () => {
     const [boardList, setBoardList] = useState([
-        { id: '', title: '', content: '', createdAt: '', timeStamp: '' }
+        {
+            rowId: 0,
+            id: '',
+            title: '',
+            content: '',
+            createdAt: '',
+            timeStamp: ''
+        }
     ])
     const fetchBoardList = async () => {
         const instance = axios.create({
@@ -40,6 +48,11 @@ const BoardList = () => {
                                 <li>{item.id}</li>
                                 <li>{item.title}</li>
                                 <li>{item.createdAt}</li>
+                                <li>
+                                    <Link to={`/board/view/${item.rowId}`}>
+                                        글보기
+                                    </Link>
+                                </li>
                             </ul>
                         </li>
                     ))}
