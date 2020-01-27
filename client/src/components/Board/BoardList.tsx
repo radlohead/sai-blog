@@ -39,7 +39,6 @@ const BoardList = () => {
                             <ul>
                                 <li>{item.id}</li>
                                 <li>{item.title}</li>
-                                <li>{item.content}</li>
                                 <li>{item.createdAt}</li>
                             </ul>
                         </li>
