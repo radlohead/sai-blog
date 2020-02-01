@@ -16,7 +16,8 @@ type TBoardWrite = {
 const BoardWrite = () => {
     const [contentHTML, setContentHTML] = useState()
     const { handleSubmit, register, errors } = useForm()
-    const editorRef: any = React.createRef()
+    const editorRef: { current: any } = React.createRef()
+    let imageUploadInfo: any = {}
     const onSubmit: any = async ({ title }: TBoardWrite) => {
         const instance = axios.create({
             baseURL: 'http://localhost:4000'
@@ -37,7 +38,7 @@ const BoardWrite = () => {
             console.error(err)
         }
     }
-    const handleClick = () => {
+    const handleClickWriteBtn = () => {
         const contentHTML = editorRef.current
             .getRootElement()
             .querySelector('.te-editor .tui-editor-contents').innerHTML
@@ -48,14 +49,50 @@ const BoardWrite = () => {
         const inputFileEle = document.querySelector(
             '.te-image-file-input'
         ) as HTMLInputElement
-        inputFileEle.addEventListener('change', (e: Event): void => {
+        inputFileEle.addEventListener('change', async (e: Event) => {
             const target = e.target as HTMLInputElement
-            const file = (target.files as FileList)[0]
-            console.log('inputFile change: ', file)
+            const file: any = (target.files as FileList)[0]
+            try {
+                const instance = axios.create({
+                    baseURL: 'http://localhost:4000'
+                })
+                const form = new FormData()
+                form.append('file', file)
+                const responseData = await instance.post('/imageUpload', form)
+                imageUploadInfo = responseData
+                return responseData
+            } catch (err) {
+                console.error(err)
+            }
+        })
+    }
+    const handleChangeAfterInputFile = () => {
+        const inputFileSubmitEles = document.querySelectorAll(
+            '.te-ok-button'
+        ) as NodeListOf<HTMLButtonElement>
+        Array.from(inputFileSubmitEles).forEach($btnEl => {
+            $btnEl.addEventListener('click', () => {
+                setTimeout(() => {
+                    Array.from(document.querySelectorAll('img')).forEach(
+                        $el => {
+                            if (
+                                $el.getAttribute('alt') ===
+                                imageUploadInfo.data.name
+                            ) {
+                                $el.setAttribute(
+                                    'src',
+                                    imageUploadInfo.data.url
+                                )
+                            }
+                        }
+                    )
+                }, 50)
+            })
         })
     }
     useEffect(() => {
         handleChangeInputFile()
+        handleChangeAfterInputFile()
     })
 
     return (
@@ -74,7 +111,6 @@ const BoardWrite = () => {
                 {errors.title && (
                     <span>타이틀은 1글자 이상 50글자 이하로 입력해주세요.</span>
                 )}
-
                 <Editor
                     previewStyle="vertical"
                     height="400px"
@@ -82,7 +118,8 @@ const BoardWrite = () => {
                     initialValue="hello"
                     ref={editorRef}
                 />
-                <button onClick={handleClick}>작성 완료</button>
+
+                <button onClick={handleClickWriteBtn}>작성 완료</button>
             </form>
         </div>
     )

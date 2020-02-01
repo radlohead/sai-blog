@@ -2,3 +2,5 @@ node_modules
 userInfo.js
 dist
 .DS_Store
+server/temp
+awsInfo.js

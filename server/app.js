@@ -2,6 +2,9 @@ const express = require('express')
 const mysql = require('mysql2')
 const app = express()
 const bodyParser = require('body-parser')
+const multer = require('multer')
+const fileUpload = require('express-fileupload')
+const uploadToS3 = require('./upload-image')
 const userInfo = require('./userInfo')
 const connection = mysql.createConnection(userInfo)
 
@@ -20,6 +23,26 @@ app.use((req, res, next) => {
     next()
 })
 
+app.post(
+    '/imageUpload',
+    multer({ dest: 'temp/images/' }).any(),
+    (req, res, next) => {
+        uploadToS3(
+            req.files[0],
+            data => {
+                res.json({
+                    uploaded: true,
+                    name: req.files[0].originalname,
+                    url: data.Location,
+                    error: null
+                })
+            },
+            err => {
+                res.json({ uploaded: false, url: null, error: err })
+            }
+        )
+    }
+)
 app.post('/login', (req, res, next) => {
     const sql = 'SELECT * FROM user WHERE id=? AND password=?'
     connection.query(sql, [req.body.id, req.body.password], (err, rows) => {
