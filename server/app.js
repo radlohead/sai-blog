@@ -58,12 +58,20 @@ app.post('/join', (req, res, next) => {
     )
 })
 app.get('/board/list', (req, res, next) => {
-    const sql = 'SELECT * FROM board WHERE id=?'
-    connection.query(sql, [req.query.id], (err, rows) => {
-        if (err) console.error(err)
-        res.set('Content-Type', 'application/json')
-        res.send(rows)
-    })
+    if (req.query.id) {
+        const sql = 'SELECT * FROM board WHERE id=?'
+        connection.query(sql, [req.query.id], (err, rows) => {
+            if (err) console.error(err)
+            res.set('Content-Type', 'application/json')
+            res.send(rows)
+        })
+    } else {
+        connection.query('SELECT * FROM board', (err, rows) => {
+            if (err) console.error(err)
+            res.set('Content-Type', 'application/json')
+            res.send(rows)
+        })
+    }
 })
 app.post('/board/write', (req, res, next) => {
     const sql =

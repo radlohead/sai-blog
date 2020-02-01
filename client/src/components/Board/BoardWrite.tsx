@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import moment from 'moment'
@@ -44,6 +44,19 @@ const BoardWrite = () => {
         setContentHTML(contentHTML)
         handleSubmit(onSubmit)
     }
+    const handleChangeInputFile = () => {
+        const inputFileEle = document.querySelector(
+            '.te-image-file-input'
+        ) as HTMLInputElement
+        inputFileEle.addEventListener('change', (e: Event): void => {
+            const target = e.target as HTMLInputElement
+            const file = (target.files as FileList)[0]
+            console.log('inputFile change: ', file)
+        })
+    }
+    useEffect(() => {
+        handleChangeInputFile()
+    })
 
     return (
         <div>
