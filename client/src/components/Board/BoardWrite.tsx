@@ -9,15 +9,23 @@ import 'tui-editor/dist/tui-editor-contents.min.css'
 const { Editor } = require('@toast-ui/react-editor')
 
 type TBoardWrite = {
+    id?: string
     title: string
     content: string
+    createdAt?: Date
+}
+type TImageUploadInfo = {
+    uploaded: Boolean
+    name: string
+    url: string
+    error: null | Error
 }
 
 const BoardWrite = () => {
     const [contentHTML, setContentHTML] = useState()
+    const [imageUploadInfo, setImageUploadInfo] = useState()
     const { handleSubmit, register, errors } = useForm()
     const editorRef: { current: any } = React.createRef()
-    let imageUploadInfo: any = {}
     const onSubmit: any = async ({ title }: TBoardWrite) => {
         const instance = axios.create({
             baseURL: 'http://localhost:4000'
@@ -51,7 +59,7 @@ const BoardWrite = () => {
         ) as HTMLInputElement
         inputFileEle.addEventListener('change', async (e: Event) => {
             const target = e.target as HTMLInputElement
-            const file: any = (target.files as FileList)[0]
+            const file = (target.files as FileList)[0]
             try {
                 const instance = axios.create({
                     baseURL: 'http://localhost:4000'
@@ -59,14 +67,15 @@ const BoardWrite = () => {
                 const form = new FormData()
                 form.append('file', file)
                 const responseData = await instance.post('/imageUpload', form)
-                imageUploadInfo = responseData
-                return responseData
+                setImageUploadInfo(responseData.data)
+                return responseData.data
             } catch (err) {
                 console.error(err)
             }
         })
     }
-    const handleChangeAfterInputFile = () => {
+    const handleChangeAfterInputFile = (imageUploadInfo: TImageUploadInfo) => {
+        if (!imageUploadInfo) return
         const inputFileSubmitEles = document.querySelectorAll(
             '.te-ok-button'
         ) as NodeListOf<HTMLButtonElement>
@@ -76,13 +85,9 @@ const BoardWrite = () => {
                     Array.from(document.querySelectorAll('img')).forEach(
                         $el => {
                             if (
-                                $el.getAttribute('alt') ===
-                                imageUploadInfo.data.name
+                                $el.getAttribute('alt') === imageUploadInfo.name
                             ) {
-                                $el.setAttribute(
-                                    'src',
-                                    imageUploadInfo.data.url
-                                )
+                                $el.setAttribute('src', imageUploadInfo.url)
                             }
                         }
                     )
@@ -92,13 +97,12 @@ const BoardWrite = () => {
     }
     useEffect(() => {
         handleChangeInputFile()
-        handleChangeAfterInputFile()
-    })
+        handleChangeAfterInputFile(imageUploadInfo)
+    }, [imageUploadInfo])
 
     return (
         <div>
             <h3>글쓰기</h3>
-
             <form onSubmit={handleSubmit(onSubmit)}>
                 <input
                     name="title"
