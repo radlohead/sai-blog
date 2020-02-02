@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import { BASE_URL } from '../Common/Constants'
 
 const BoardList = () => {
     const [boardList, setBoardList] = useState([
@@ -15,7 +16,7 @@ const BoardList = () => {
     ])
     const fetchBoardList = async () => {
         const instance = axios.create({
-            baseURL: 'http://localhost:4000',
+            baseURL: BASE_URL,
             timeout: 3000
         })
         try {

@@ -1,6 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
+import { BASE_URL } from '../components/Common/Constants'
 
 type TLogin = {
     id: string
@@ -11,7 +12,7 @@ const Join = () => {
     const { handleSubmit, register, errors } = useForm()
     const onSubmit: any = async ({ id, password }: TLogin) => {
         const instance = axios.create({
-            baseURL: 'http://localhost:4000',
+            baseURL: BASE_URL,
             timeout: 3000
         })
         try {

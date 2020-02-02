@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import moment from 'moment'
+import { BASE_URL } from '../Common/Constants'
 import 'codemirror/lib/codemirror.css'
 import 'tui-editor/dist/tui-editor.min.css'
 import 'tui-editor/dist/tui-editor-contents.min.css'
@@ -28,7 +29,7 @@ const BoardWrite = () => {
     const editorRef: { current: any } = React.createRef()
     const onSubmit: any = async ({ title }: TBoardWrite) => {
         const instance = axios.create({
-            baseURL: 'http://localhost:4000'
+            baseURL: BASE_URL
         })
         const date = moment()
             .format()
@@ -62,7 +63,7 @@ const BoardWrite = () => {
             const file = (target.files as FileList)[0]
             try {
                 const instance = axios.create({
-                    baseURL: 'http://localhost:4000'
+                    baseURL: BASE_URL
                 })
                 const form = new FormData()
                 form.append('file', file)

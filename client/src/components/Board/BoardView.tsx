@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { BASE_URL } from '../Common/Constants'
 
 const BoardView = (props: any) => {
     const [content, setContent] = useState({
@@ -13,7 +14,7 @@ const BoardView = (props: any) => {
     const [markUp, setMarkUp] = useState()
     const fetchBoard = async () => {
         const instance = axios.create({
-            baseURL: 'http://localhost:4000',
+            baseURL: BASE_URL,
             timeout: 3000
         })
         try {
