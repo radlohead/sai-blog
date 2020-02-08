@@ -10,12 +10,6 @@ import 'tui-editor/dist/tui-editor-contents.min.css'
 
 const { Editor } = require('@toast-ui/react-editor')
 
-type TBoardWrite = {
-    id?: string
-    title: string
-    content: string
-    createdAt?: Date
-}
 type TImageUploadInfo = {
     uploaded: Boolean
     name: string
@@ -28,8 +22,11 @@ const BoardWrite = () => {
     const [imageUploadInfo, setImageUploadInfo] = useState()
     const { handleSubmit, register, errors } = useForm()
     const history = useHistory()
-    const editorRef: { current: any } = React.createRef()
-    const onSubmit: any = async ({ title }: TBoardWrite) => {
+    const editorRef:
+        | React.RefObject<Element>
+        | null
+        | object = React.createRef()
+    const onSubmit = async ({ title = '' }): Promise<void> => {
         const instance = axios.create({
             baseURL: BASE_URL
         })
@@ -52,7 +49,9 @@ const BoardWrite = () => {
         }
     }
     const handleClickWriteBtn = () => {
-        const contentHTML = editorRef.current
+        const contentHTML = (editorRef as {
+            current: { getRootElement: Function }
+        }).current
             .getRootElement()
             .querySelector('.te-editor .tui-editor-contents').innerHTML
         setContentHTML(contentHTML)
