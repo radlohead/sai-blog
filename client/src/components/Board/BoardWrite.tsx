@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import moment from 'moment'
@@ -26,6 +27,7 @@ const BoardWrite = () => {
     const [contentHTML, setContentHTML] = useState()
     const [imageUploadInfo, setImageUploadInfo] = useState()
     const { handleSubmit, register, errors } = useForm()
+    const history = useHistory()
     const editorRef: { current: any } = React.createRef()
     const onSubmit: any = async ({ title }: TBoardWrite) => {
         const instance = axios.create({
@@ -37,14 +39,14 @@ const BoardWrite = () => {
         try {
             const getSaiBlog = localStorage.getItem('sai-blog') || '{}'
             const id = JSON.parse(getSaiBlog).id
-            const responseData = await instance.post('/board/write', {
+            await instance.post('/board/write', {
                 id,
                 title,
                 content: contentHTML,
                 createdAt: date
             })
             alert('글 작성 완료되었습니다.')
-            return responseData
+            history.push('/board')
         } catch (err) {
             console.error(err)
         }
