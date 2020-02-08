@@ -3,6 +3,7 @@ const mysql = require('mysql2')
 const app = express()
 const bodyParser = require('body-parser')
 const multer = require('multer')
+const bcrypt = require('bcrypt')
 const uploadToS3 = require('./upload-image')
 const userInfo = require('./userInfo')
 const connection = mysql.createConnection(userInfo)
@@ -21,6 +22,17 @@ app.use((req, res, next) => {
     )
     next()
 })
+
+const pwdEncryptF = (f, pwd) => {
+    const saltFactor = 10
+    bcrypt.genSalt(saltFactor, (err, salt) => {
+        if (err) return next(err)
+        bcrypt.hash(pwd, salt, (err, hash) => {
+            if (err) return next(err)
+            f(hash)
+        })
+    })
+}
 
 app.post(
     '/imageUpload',
@@ -42,15 +54,28 @@ app.post(
         )
     }
 )
+
 app.post('/login', (req, res, next) => {
-    const sql = 'SELECT * FROM user WHERE id=? AND password=?'
-    connection.query(sql, [req.body.id, req.body.password], (err, rows) => {
+    const sql = 'SELECT * FROM user WHERE id=?'
+    connection.query(sql, [req.body.id], (err, rows) => {
         if (err || !rows.length) {
             console.error('로그인이 실패했습니다.')
             next()
         } else {
-            res.set('Content-Type', 'application/json')
-            res.send({ status: 'SUCCESS' })
+            bcrypt.compare(
+                req.body.password,
+                rows[0].password,
+                (err, result) => {
+                    if (err) {
+                        console.error('로그인이 실패했습니다.')
+                    } else if (!result) {
+                        console.error('비밀번호가 틀렸습니다.')
+                    } else if (result) {
+                        res.set('Content-Type', 'application/json')
+                        res.send({ status: 'SUCCESS' })
+                    }
+                }
+            )
         }
     })
 })
@@ -62,22 +87,20 @@ app.get('/join', (req, res, next) => {
     })
 })
 app.post('/join', (req, res, next) => {
-    const sql =
-        'INSERT INTO user(id, password, createdAt, updatedAt) VALUES(?, ?, ?, ?)'
-    connection.query(
-        sql,
-        [
-            req.body.id,
-            req.body.password,
-            req.body.createdAt,
-            req.body.updatedAt
-        ],
-        (err, rows) => {
-            if (err) console.error(err)
-            res.set('Content-Type', 'application/json')
-            res.send({ status: 'SUCCESS' })
-        }
-    )
+    const joinF = hash => {
+        const sql =
+            'INSERT INTO user(id, password, createdAt, updatedAt) VALUES(?, ?, ?, ?)'
+        connection.query(
+            sql,
+            [req.body.id, hash, req.body.createdAt, req.body.updatedAt],
+            (err, rows) => {
+                if (err) console.error(err)
+                res.set('Content-Type', 'application/json')
+                res.send({ status: 'SUCCESS' })
+            }
+        )
+    }
+    pwdEncryptF(joinF, req.body.password)
 })
 app.get('/board/list', (req, res, next) => {
     if (req.query.id) {
