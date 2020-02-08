@@ -35,8 +35,10 @@ const BoardWrite = () => {
             .format()
             .substr(0, 19)
         try {
+            const getSaiBlog = localStorage.getItem('sai-blog') || '{}'
+            const id = JSON.parse(getSaiBlog).id
             const responseData = await instance.post('/board/write', {
-                id: 'admin',
+                id,
                 title,
                 content: contentHTML,
                 createdAt: date
