@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
+import { RouteComponentProps } from 'react-router-dom'
 import axios from 'axios'
 import { BASE_URL } from '../Common/Constants'
 
-const BoardView = (props: any) => {
+const BoardView = (props: RouteComponentProps<{ rowId: string }>) => {
     const [content, setContent] = useState({
         rowId: 0,
         id: '',

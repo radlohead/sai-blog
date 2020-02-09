@@ -4,14 +4,12 @@ import axios from 'axios'
 import moment from 'moment'
 import { BASE_URL } from '../components/Common/Constants'
 
-type TJoin = {
-    id: string
-    password: string
-}
-
 const Join = () => {
     const { handleSubmit, register, errors } = useForm()
-    const onSubmit: any = async ({ id, password }: TJoin) => {
+    const onSubmit = async ({
+        id,
+        password
+    }: Record<string, string>): Promise<any> => {
         const instance = axios.create({
             baseURL: BASE_URL,
             timeout: 5000

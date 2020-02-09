@@ -10,7 +10,10 @@ type TLogin = {
 
 const Join = () => {
     const { handleSubmit, register, errors } = useForm()
-    const onSubmit: any = async ({ id, password }: TLogin) => {
+    const onSubmit = async ({
+        id,
+        password
+    }: Record<string, string>): Promise<any> => {
         const instance = axios.create({
             baseURL: BASE_URL,
             timeout: 3000
