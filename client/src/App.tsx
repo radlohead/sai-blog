@@ -17,7 +17,7 @@ const App: React.FC = () => {
                         <Link to="/join">회원가입</Link>
                     </li>
                     <li>
-                        <Link to="/board">자유게시판</Link>
+                        <Link to="/board">최근글</Link>
                     </li>
                 </ul>
             </nav>

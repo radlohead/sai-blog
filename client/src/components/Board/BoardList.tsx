@@ -40,21 +40,19 @@ const BoardList = () => {
 
     return (
         <div>
-            <h3>글 목록</h3>
+            <h3>목록</h3>
             <article>
                 <ul>
                     {boardList.map(item => (
                         <li key={item.createdAt}>
-                            <ul>
-                                <li>{item.id}</li>
-                                <li>{item.title}</li>
-                                <li>{item.createdAt}</li>
-                                <li>
-                                    <Link to={`/board/view/${item.rowId}`}>
-                                        글보기
-                                    </Link>
-                                </li>
-                            </ul>
+                            <Link to={`/board/view/${item.rowId}`}>
+                                <ul>
+                                    <li>{item.id}</li>
+                                    <li>{item.title}</li>
+                                    <li>{item.createdAt}</li>
+                                    <li></li>
+                                </ul>
+                            </Link>
                         </li>
                     ))}
                 </ul>

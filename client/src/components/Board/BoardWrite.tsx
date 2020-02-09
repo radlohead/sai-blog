@@ -42,7 +42,7 @@ const BoardWrite = () => {
                 content: contentHTML,
                 createdAt: date
             })
-            alert('글 작성 완료되었습니다.')
+            alert('글 작성이 완료되었습니다.')
             history.push('/board')
         } catch (err) {
             console.error(err)
