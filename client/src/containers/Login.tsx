@@ -23,11 +23,12 @@ const Join = () => {
                 id,
                 password
             })
-            console.log('로그인 되었습니다.')
             const setData: { id: string } = {
                 id
             }
             localStorage.setItem('sai-blog', JSON.stringify(setData))
+            console.log('로그인 되었습니다.')
+            window.location.reload()
             return responseData
         } catch (err) {
             console.log('로그인이 실패했습니다.')
