@@ -37,25 +37,28 @@ const BoardList = () => {
     useEffect(() => {
         fetchBoardList()
     }, [])
+    const renderBoardList = () => {
+        return boardList.map(item => (
+            <li key={item.createdAt}>
+                <Link to={`/board/view/${item.rowId}`}>
+                    <ul>
+                        <li>{item.id}</li>
+                        <li>{item.title}</li>
+                        <li>
+                            {item.createdAt.substr(0, 10).replace(/\-/g, '.')}
+                        </li>
+                        <li></li>
+                    </ul>
+                </Link>
+            </li>
+        ))
+    }
 
     return (
         <div>
             <h3>목록</h3>
             <article>
-                <ul>
-                    {boardList.map(item => (
-                        <li key={item.createdAt}>
-                            <Link to={`/board/view/${item.rowId}`}>
-                                <ul>
-                                    <li>{item.id}</li>
-                                    <li>{item.title}</li>
-                                    <li>{item.createdAt}</li>
-                                    <li></li>
-                                </ul>
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
+                <ul>{renderBoardList()}</ul>
             </article>
         </div>
     )
