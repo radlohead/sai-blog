@@ -56,7 +56,6 @@ const BoardList = () => {
 
     return (
         <div>
-            <h3>목록</h3>
             <article>
                 <ul>{renderBoardList()}</ul>
             </article>
