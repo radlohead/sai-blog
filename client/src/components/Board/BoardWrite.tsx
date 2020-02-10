@@ -26,7 +26,7 @@ const BoardWrite = () => {
         | React.RefObject<Element>
         | null
         | object = React.createRef()
-    const onSubmit = async ({ title = '' }): Promise<void> => {
+    const onSubmit = async ({ category = '', title = '' }): Promise<void> => {
         const instance = axios.create({
             baseURL: BASE_URL
         })
@@ -37,6 +37,7 @@ const BoardWrite = () => {
             const getSaiBlog = localStorage.getItem('sai-blog') || '{}'
             const id = JSON.parse(getSaiBlog).id
             await instance.post('/board/write', {
+                category,
                 id,
                 title,
                 content: contentHTML,
@@ -108,6 +109,19 @@ const BoardWrite = () => {
         <div>
             <h3>글쓰기</h3>
             <form onSubmit={handleSubmit(onSubmit)}>
+                <select
+                    name="category"
+                    defaultValue=""
+                    ref={register({
+                        required: 'Required'
+                    })}
+                >
+                    <option value="">카테고리를 선택해주세요.</option>
+                    <option value="JavaScript">JavaScript</option>
+                    <option value="React">React</option>
+                    <option value="Vue">Vue</option>
+                </select>
+                {errors.category && <span>카테고리를 선택해주세요.</span>}
                 <input
                     name="title"
                     ref={register({

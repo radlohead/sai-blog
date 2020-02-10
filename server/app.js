@@ -120,10 +120,16 @@ app.get('/board/list', (req, res, next) => {
 })
 app.post('/board/write', (req, res, next) => {
     const sql =
-        'INSERT INTO board(id, title, content, createdAt) VALUES(?, ?, ?, ?)'
+        'INSERT INTO board(id, category, title, content, createdAt) VALUES(?, ?, ?, ?, ?)'
     connection.query(
         sql,
-        [req.body.id, req.body.title, req.body.content, req.body.createdAt],
+        [
+            req.body.id,
+            req.body.category,
+            req.body.title,
+            req.body.content,
+            req.body.createdAt
+        ],
         (err, rows) => {
             if (err) console.error(err)
             res.set('Content-type', 'application/json')

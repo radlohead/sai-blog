@@ -7,6 +7,7 @@ const BoardList = () => {
     const [boardList, setBoardList] = useState([
         {
             rowId: 0,
+            category: '',
             id: '',
             title: '',
             content: '',
@@ -38,10 +39,12 @@ const BoardList = () => {
         fetchBoardList()
     }, [])
     const renderBoardList = () => {
+        if (!boardList.length) return <li>현재 작성된 포스팅이 없습니다.</li>
         return boardList.map(item => (
             <li key={item.createdAt}>
                 <Link to={`/board/view/${item.rowId}`}>
                     <ul>
+                        <li>{item.category}</li>
                         <li>{item.id}</li>
                         <li>{item.title}</li>
                         <li>
