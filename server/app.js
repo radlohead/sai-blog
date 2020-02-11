@@ -145,6 +145,13 @@ app.get('/board/view/:rowId', (req, res, next) => {
         res.send(rows)
     })
 })
+app.get('/board/category', (req, res, next) => {
+    connection.query('SELECT category FROM board', (err, rows) => {
+        if (err) console.error(err)
+        res.set('Content-Type', 'application/json')
+        res.send(rows.map(item => item.category))
+    })
+})
 
 app.listen(app.get('port'), () => {
     console.log('server connect')
