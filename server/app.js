@@ -149,7 +149,7 @@ app.get('/board/category', (req, res, next) => {
     connection.query('SELECT category FROM board', (err, rows) => {
         if (err) console.error(err)
         res.set('Content-Type', 'application/json')
-        res.send(rows.map(item => item.category))
+        res.send(Array.from(new Set(rows.map(item => item.category))))
     })
 })
 
