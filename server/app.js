@@ -152,6 +152,13 @@ app.get('/board/category', (req, res, next) => {
         res.send(Array.from(new Set(rows.map(item => item.category))))
     })
 })
+app.get('/board/category/:category', (req, res, next) => {
+    const sql = 'SELECT * FROM board WHERE category = ?'
+    connection.query(sql, [req.params.category], (err, rows) => {
+        res.set('Content-Type', 'application/json')
+        res.send(rows)
+    })
+})
 
 app.listen(app.get('port'), () => {
     console.log('server connect')

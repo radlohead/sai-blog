@@ -16,7 +16,11 @@ const Board = () => {
         if (!category.length) fetchCategory()
     }, [category])
     const renderCategorys = category.map(category => (
-        <li key={category}>{category}</li>
+        <li key={category}>
+            <Link to={{ pathname: '/board/' + category, state: category }}>
+                {category}
+            </Link>
+        </li>
     ))
     return (
         <div>
@@ -34,7 +38,7 @@ const Board = () => {
             <article>
                 <ul>
                     <li>
-                        <Route path="/board" exact component={BoardList} />
+                        <Route path="/board" component={BoardList} />
                     </li>
                     <li>
                         <Route path="/board/write" component={BoardWrite} />

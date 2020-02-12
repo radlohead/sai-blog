@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, RouteComponentProps } from 'react-router-dom'
 import axios from 'axios'
 import { BASE_URL } from '../Common/Constants'
 
-const BoardList = () => {
+const BoardList = (props: RouteComponentProps<{ rowId: string }>) => {
     const [boardList, setBoardList] = useState([
         {
             rowId: 0,
@@ -38,6 +38,25 @@ const BoardList = () => {
     useEffect(() => {
         fetchBoardList()
     }, [])
+    const fetchSelectedItemList = async () => {
+        const instance = axios.create({
+            baseURL: BASE_URL,
+            timeout: 3000
+        })
+        try {
+            const responseData = await instance.get(
+                `/board/category/${props.location.state}`
+            )
+            setBoardList(responseData.data)
+        } catch (err) {
+            console.error(err)
+        }
+    }
+    useEffect(() => {
+        if (props.location.state) {
+            fetchSelectedItemList()
+        }
+    }, [props.location.state])
     const renderBoardList = () => {
         if (!boardList.length) return <li>현재 작성된 포스팅이 없습니다.</li>
         return boardList.map(item => (
