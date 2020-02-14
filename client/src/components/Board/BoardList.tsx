@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { Link, RouteComponentProps } from 'react-router-dom'
+import { Link, Route, RouteComponentProps } from 'react-router-dom'
 import axios from 'axios'
+import BoardView from '../../components/Board/BoardView'
 import { BASE_URL } from '../Common/Constants'
 
-const BoardList = (props: RouteComponentProps<{ rowId: string }>) => {
+const BoardList = (
+    props: RouteComponentProps<{ rowId: string }> | { [key: string]: any }
+) => {
     const [boardList, setBoardList] = useState([
         {
             rowId: 0,
@@ -45,7 +48,7 @@ const BoardList = (props: RouteComponentProps<{ rowId: string }>) => {
         })
         try {
             const responseData = await instance.get(
-                `/board/category/${props.location.state}`
+                `/board/category/${props.location.state.category}`
             )
             setBoardList(responseData.data)
         } catch (err) {
@@ -53,15 +56,24 @@ const BoardList = (props: RouteComponentProps<{ rowId: string }>) => {
         }
     }
     useEffect(() => {
-        if (props.location.state) {
-            fetchSelectedItemList()
-        }
+        if (
+            typeof props.location.state !== 'object' ||
+            !props.location.state.hasOwnProperty('category')
+        )
+            return
+        fetchSelectedItemList()
     }, [props.location.state])
+
     const renderBoardList = () => {
         if (!boardList.length) return <li>현재 작성된 포스팅이 없습니다.</li>
         return boardList.map(item => (
             <li key={item.createdAt}>
-                <Link to={`/board/view/${item.rowId}`}>
+                <Link
+                    to={{
+                        pathname: `/board/view/${item.rowId}`,
+                        state: item.rowId
+                    }}
+                >
                     <ul>
                         <li>{item.category}</li>
                         <li>{item.id}</li>
@@ -77,11 +89,14 @@ const BoardList = (props: RouteComponentProps<{ rowId: string }>) => {
     }
 
     return (
-        <div>
+        <>
             <article>
                 <ul>{renderBoardList()}</ul>
+                <div>
+                    <Route path="/board/view/:rowId" component={BoardView} />
+                </div>
             </article>
-        </div>
+        </>
     )
 }
 

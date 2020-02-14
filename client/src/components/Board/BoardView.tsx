@@ -30,10 +30,8 @@ const BoardView = (props: RouteComponentProps<{ rowId: string }>) => {
     }
     const createMarkUp = () => ({ __html: markUp })
     useEffect(() => {
-        if (!content.id) {
-            fetchBoard()
-        }
-    })
+        fetchBoard()
+    }, [props.match.params.rowId])
 
     return (
         <div>

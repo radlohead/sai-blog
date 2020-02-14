@@ -3,7 +3,6 @@ import { Link, Route } from 'react-router-dom'
 import axios from 'axios'
 import BoardList from '../components/Board/BoardList'
 import BoardWrite from '../components/Board/BoardWrite'
-import BoardView from '../components/Board/BoardView'
 import { BASE_URL } from '../components/Common/Constants'
 
 const Board = () => {
@@ -17,7 +16,7 @@ const Board = () => {
     }, [category])
     const renderCategorys = category.map(category => (
         <li key={category}>
-            <Link to={{ pathname: '/board/' + category, state: category }}>
+            <Link to={{ pathname: '/board/' + category, state: { category } }}>
                 {category}
             </Link>
         </li>
@@ -42,12 +41,6 @@ const Board = () => {
                     </li>
                     <li>
                         <Route path="/board/write" component={BoardWrite} />
-                    </li>
-                    <li>
-                        <Route
-                            path="/board/view/:rowId"
-                            component={BoardView}
-                        />
                     </li>
                 </ul>
             </article>
