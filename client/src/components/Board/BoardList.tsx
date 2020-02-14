@@ -37,7 +37,7 @@ const BoardList = (props: RouteComponentProps<{ rowId: string }>) => {
     }
     useEffect(() => {
         fetchBoardList()
-    }, [])
+    }, [!props.location.state])
     const fetchSelectedItemList = async () => {
         const instance = axios.create({
             baseURL: BASE_URL,
