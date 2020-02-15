@@ -70,7 +70,7 @@ const BoardList = (
                 <Link
                     to={{
                         pathname: `/board/view/${item.rowId}`,
-                        state: item.rowId
+                        state: { rowId: item.rowId }
                     }}
                 >
                     <ul>
@@ -90,7 +90,7 @@ const BoardList = (
     return (
         <>
             <article>
-                <ul>{renderBoardList()}</ul>
+                <ul>{!state.rowId && renderBoardList()}</ul>
                 <div>
                     <Route path="/board/view/:rowId" component={BoardView} />
                 </div>

@@ -26,9 +26,6 @@ const Board = () => {
             <nav>
                 <ul>
                     <li>
-                        <Link to="/board">홈</Link>
-                    </li>
-                    <li>
                         <Link to="/board/write">글쓰기</Link>
                     </li>
                     {renderCategorys}
