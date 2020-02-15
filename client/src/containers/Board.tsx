@@ -5,6 +5,7 @@ import { ListGroup } from 'react-bootstrap'
 import BoardList from '../components/Board/BoardList'
 import BoardWrite from '../components/Board/BoardWrite'
 import { BASE_URL } from '../components/Common/Constants'
+import '../style/containers/Board.scss'
 
 const Board = () => {
     const [category, setCategory] = useState([])
@@ -33,7 +34,7 @@ const Board = () => {
         </li>
     ))
     return (
-        <div>
+        <main className="main">
             <nav className="gnb_sub">
                 <ul>
                     {isLogin && (
@@ -44,7 +45,7 @@ const Board = () => {
                     {renderCategorys}
                 </ul>
             </nav>
-            <article>
+            <article className="postingList">
                 <ul>
                     <li>
                         <Route path="/board" component={BoardList} />
@@ -54,7 +55,7 @@ const Board = () => {
                     </li>
                 </ul>
             </article>
-        </div>
+        </main>
     )
 }
 export default Board

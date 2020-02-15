@@ -58,7 +58,7 @@ const App: React.FC = () => {
                     </DropdownButton>
                 </h1>
             </nav>
-            <div className="container">
+            <div>
                 <Route path="/join" component={Join} />
                 <Route path="/login" component={Login} />
                 <Route path="/board" component={Board} />

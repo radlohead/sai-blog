@@ -96,24 +96,6 @@ const BoardList = (
                     </Card.Footer>
                 </Card>
             </CardGroup>
-            // <li key={item.createdAt}>
-            //     <Link
-            //         to={{
-            //             pathname: `/board/view/${item.rowId}`,
-            //             state: { rowId: item.rowId }
-            //         }}
-            //     >
-            //         <ul>
-            //             <li>{item.category}</li>
-            //             <li>{item.id}</li>
-            //             <li>{item.title}</li>
-            //             <li>
-            //                 {item.createdAt.substr(0, 10).replace(/-/g, '.')}
-            //             </li>
-            //             <li></li>
-            //         </ul>
-            //     </Link>
-            // </li>
         ))
     }
 
