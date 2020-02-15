@@ -20,16 +20,14 @@ const Board = () => {
     const renderCategorys = category.map(category => (
         <li key={category}>
             <ListGroup>
-                <ListGroup.Item>
-                    <Link
-                        to={{
-                            pathname: '/board/' + category,
-                            state: { category }
-                        }}
-                    >
-                        {category}
-                    </Link>
-                </ListGroup.Item>
+                <Link
+                    to={{
+                        pathname: '/board/' + category,
+                        state: { category }
+                    }}
+                >
+                    <ListGroup.Item>{category}</ListGroup.Item>
+                </Link>
             </ListGroup>
         </li>
     ))
