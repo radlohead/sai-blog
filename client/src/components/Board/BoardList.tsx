@@ -72,24 +72,22 @@ const BoardList = (
                     <Card.Img variant="top" src="holder.js/100px160" />
                     <Card.Body>
                         <Card.Title>{item.title}</Card.Title>
-                        <Card.Text>
-                            <Link
-                                to={{
-                                    pathname: `/board/view/${item.rowId}`,
-                                    state: { rowId: item.rowId }
-                                }}
-                            >
-                                <span>
-                                    <span>{item.category}</span>
-                                    <span>{item.id}</span>
-                                    <span>
-                                        {item.createdAt
-                                            .substr(0, 10)
-                                            .replace(/-/g, '.')}
-                                    </span>
-                                </span>
-                            </Link>
-                        </Card.Text>
+                        <Link
+                            to={{
+                                pathname: `/board/view/${item.rowId}`,
+                                state: { rowId: item.rowId }
+                            }}
+                        >
+                            <ul>
+                                <li>{item.category}</li>
+                                <li>{item.id}</li>
+                                <li>
+                                    {item.createdAt
+                                        .substr(0, 10)
+                                        .replace(/-/g, '.')}
+                                </li>
+                            </ul>
+                        </Link>
                     </Card.Body>
                     <Card.Footer>
                         <small className="text-muted">
