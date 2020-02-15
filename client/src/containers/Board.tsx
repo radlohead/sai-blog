@@ -24,7 +24,7 @@ const Board = () => {
     ))
     return (
         <div>
-            <nav>
+            <nav className="gnb_sub">
                 <ul>
                     {isLogin && (
                         <li>
