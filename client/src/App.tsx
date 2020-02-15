@@ -15,6 +15,10 @@ const App: React.FC = () => {
             state: { total: true }
         })
     }, [history])
+    const handleClickLogoutBtn = () => {
+        localStorage.removeItem('sai-blog')
+        window.location.reload()
+    }
 
     return (
         <div className="root">
@@ -36,6 +40,9 @@ const App: React.FC = () => {
                                 <li>
                                     <Link to="/login">로그인</Link>
                                 </li>
+                            )}
+                            {isLogin && (
+                                <li onClick={handleClickLogoutBtn}>로그아웃</li>
                             )}
                         </Dropdown.Item>
                     </DropdownButton>
