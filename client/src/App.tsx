@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { Link, Route, useHistory } from 'react-router-dom'
+import Login from './containers/Login'
 import Join from './containers/Join'
 import Board from './containers/Board'
 import './style/App.scss'
@@ -29,14 +30,20 @@ const App: React.FC = () => {
                         </Link>
                     </li>
                     {!getUserInfo && (
-                        <li>
-                            <Link to="/join">회원가입</Link>
-                        </li>
+                        <>
+                            <li>
+                                <Link to="/join">회원가입</Link>
+                            </li>
+                            <li>
+                                <Link to="/login">로그인</Link>
+                            </li>
+                        </>
                     )}
                 </ul>
             </nav>
             <div className="container">
                 <Route path="/join" component={Join} />
+                <Route path="/login" component={Login} />
                 <Route path="/board" component={Board} />
             </div>
         </div>
