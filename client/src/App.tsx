@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import { Link, Route, useHistory } from 'react-router-dom'
-import './App.css'
 import Home from './containers/Home'
 import Join from './containers/Join'
 import Board from './containers/Board'
+import './style/App.scss'
 
 const App: React.FC = () => {
     const history = useHistory()
