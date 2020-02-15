@@ -13,23 +13,24 @@ const BoardView = (props: RouteComponentProps<{ rowId: string }>) => {
         timeStamp: ''
     })
     const [markUp, setMarkUp] = useState()
-    const fetchBoard = async () => {
-        const instance = axios.create({
-            baseURL: BASE_URL,
-            timeout: 3000
-        })
-        try {
-            const rowId = props.match.params.rowId
-            const responseData = await instance.get(`/board/view/${rowId}`)
-            setContent(responseData.data[0])
-            setMarkUp(responseData.data[0].content)
-            return responseData.data
-        } catch (err) {
-            console.error(err)
-        }
-    }
+
     const createMarkUp = () => ({ __html: markUp })
     useEffect(() => {
+        const fetchBoard = async () => {
+            const instance = axios.create({
+                baseURL: BASE_URL,
+                timeout: 3000
+            })
+            try {
+                const rowId = props.match.params.rowId
+                const responseData = await instance.get(`/board/view/${rowId}`)
+                setContent(responseData.data[0])
+                setMarkUp(responseData.data[0].content)
+                return responseData.data
+            } catch (err) {
+                console.error(err)
+            }
+        }
         fetchBoard()
     }, [props.match.params.rowId])
 

@@ -11,7 +11,7 @@ const App: React.FC = () => {
 
     useEffect(() => {
         if (getUserInfo) history.push('/board')
-    }, [])
+    })
 
     return (
         <div className="App">
@@ -25,7 +25,14 @@ const App: React.FC = () => {
                             <Link to="/join">회원가입</Link>
                         </li>
                         <li>
-                            <Link to="/board">최근글</Link>
+                            <Link
+                                to={{
+                                    pathname: '/board',
+                                    state: { total: true }
+                                }}
+                            >
+                                최근글
+                            </Link>
                         </li>
                     </ul>
                 </nav>

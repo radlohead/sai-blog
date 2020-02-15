@@ -18,51 +18,50 @@ const BoardList = (
             timeStamp: ''
         }
     ])
-    const fetchBoardList = async () => {
-        const instance = axios.create({
-            baseURL: BASE_URL,
-            timeout: 3000
-        })
-        try {
-            const fetchLocalStorage =
-                JSON.parse(localStorage.getItem('sai-blog') as string) || {}
-            const boardListData = {
-                id: fetchLocalStorage.id
-            }
-            const responseData = await instance.get('/board/list', {
-                params: boardListData
+    const state = props.location.state
+    useEffect(() => {
+        if (typeof state !== 'object' || !state.hasOwnProperty('total')) return
+        const fetchBoardList = async () => {
+            const instance = axios.create({
+                baseURL: BASE_URL,
+                timeout: 3000
             })
-            setBoardList(responseData.data)
-            return responseData.data
-        } catch (err) {
-            console.error(err)
+            try {
+                const fetchLocalStorage =
+                    JSON.parse(localStorage.getItem('sai-blog') as string) || {}
+                const boardListData = {
+                    id: fetchLocalStorage.id
+                }
+                const responseData = await instance.get('/board/list', {
+                    params: boardListData
+                })
+                setBoardList(responseData.data)
+                return responseData.data
+            } catch (err) {
+                console.error(err)
+            }
         }
-    }
-    useEffect(() => {
         fetchBoardList()
-    }, [!props.location.state])
-    const fetchSelectedItemList = async () => {
-        const instance = axios.create({
-            baseURL: BASE_URL,
-            timeout: 3000
-        })
-        try {
-            const responseData = await instance.get(
-                `/board/category/${props.location.state.category}`
-            )
-            setBoardList(responseData.data)
-        } catch (err) {
-            console.error(err)
-        }
-    }
+    }, [state])
     useEffect(() => {
-        if (
-            typeof props.location.state !== 'object' ||
-            !props.location.state.hasOwnProperty('category')
-        )
+        if (typeof state !== 'object' || !state.hasOwnProperty('category'))
             return
+        const fetchSelectedItemList = async () => {
+            const instance = axios.create({
+                baseURL: BASE_URL,
+                timeout: 3000
+            })
+            try {
+                const responseData = await instance.get(
+                    `/board/category/${state.category}`
+                )
+                setBoardList(responseData.data)
+            } catch (err) {
+                console.error(err)
+            }
+        }
         fetchSelectedItemList()
-    }, [props.location.state])
+    }, [state])
 
     const renderBoardList = () => {
         if (!boardList.length) return <li>현재 작성된 포스팅이 없습니다.</li>
@@ -79,7 +78,7 @@ const BoardList = (
                         <li>{item.id}</li>
                         <li>{item.title}</li>
                         <li>
-                            {item.createdAt.substr(0, 10).replace(/\-/g, '.')}
+                            {item.createdAt.substr(0, 10).replace(/-/g, '.')}
                         </li>
                         <li></li>
                     </ul>
