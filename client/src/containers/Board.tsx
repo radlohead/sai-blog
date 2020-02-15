@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, Route } from 'react-router-dom'
 import axios from 'axios'
+import { ListGroup } from 'react-bootstrap'
 import BoardList from '../components/Board/BoardList'
 import BoardWrite from '../components/Board/BoardWrite'
 import { BASE_URL } from '../components/Common/Constants'
@@ -17,9 +18,18 @@ const Board = () => {
     }, [category])
     const renderCategorys = category.map(category => (
         <li key={category}>
-            <Link to={{ pathname: '/board/' + category, state: { category } }}>
-                {category}
-            </Link>
+            <ListGroup>
+                <ListGroup.Item>
+                    <Link
+                        to={{
+                            pathname: '/board/' + category,
+                            state: { category }
+                        }}
+                    >
+                        {category}
+                    </Link>
+                </ListGroup.Item>
+            </ListGroup>
         </li>
     ))
     return (

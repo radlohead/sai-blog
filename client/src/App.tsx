@@ -29,6 +29,16 @@ const App: React.FC = () => {
                         title="Dropdown button"
                     >
                         <Dropdown.Item as="button">
+                            <Link
+                                to={{
+                                    pathname: '/board',
+                                    state: { total: true }
+                                }}
+                            >
+                                전체 글보기
+                            </Link>
+                        </Dropdown.Item>
+                        <Dropdown.Item as="button">
                             {!isLogin && (
                                 <li>
                                     <Link to="/join">회원가입</Link>
@@ -47,16 +57,6 @@ const App: React.FC = () => {
                         </Dropdown.Item>
                     </DropdownButton>
                 </h1>
-                <h2>
-                    <Link
-                        to={{
-                            pathname: '/board',
-                            state: { total: true }
-                        }}
-                    >
-                        전체 글보기
-                    </Link>
-                </h2>
             </nav>
             <div className="container">
                 <Route path="/join" component={Join} />
