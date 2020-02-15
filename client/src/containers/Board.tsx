@@ -7,6 +7,7 @@ import { BASE_URL } from '../components/Common/Constants'
 
 const Board = () => {
     const [category, setCategory] = useState([])
+    const isLogin = Boolean(localStorage.getItem('sai-blog'))
     const fetchCategory = async () => {
         const responseData = await axios.get(`${BASE_URL}/board/category`)
         setCategory(responseData.data)
@@ -25,9 +26,11 @@ const Board = () => {
         <div>
             <nav>
                 <ul>
-                    <li>
-                        <Link to="/board/write">글쓰기</Link>
-                    </li>
+                    {isLogin && (
+                        <li>
+                            <Link to="/board/write">글쓰기</Link>
+                        </li>
+                    )}
                     {renderCategorys}
                 </ul>
             </nav>

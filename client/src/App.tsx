@@ -6,7 +6,7 @@ import Board from './containers/Board'
 import './style/App.scss'
 
 const App: React.FC = () => {
-    const getUserInfo = localStorage.getItem('sai-blog')
+    const isLogin = Boolean(localStorage.getItem('sai-blog'))
     const history = useHistory()
     useEffect(() => {
         history.push({
@@ -29,7 +29,7 @@ const App: React.FC = () => {
                             전체 글보기
                         </Link>
                     </li>
-                    {!getUserInfo && (
+                    {!isLogin && (
                         <>
                             <li>
                                 <Link to="/join">회원가입</Link>
