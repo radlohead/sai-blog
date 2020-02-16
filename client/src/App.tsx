@@ -28,33 +28,42 @@ const App: React.FC = () => {
                         id="dropdown-item-button"
                         title="Dropdown button"
                     >
-                        <Dropdown.Item as="button">
-                            <Link
-                                to={{
-                                    pathname: '/board',
-                                    state: { total: true }
-                                }}
-                            >
+                        <Link
+                            to={{
+                                pathname: '/board',
+                                state: { total: true }
+                            }}
+                        >
+                            <Dropdown.Item as="button">
                                 전체 글보기
-                            </Link>
-                        </Dropdown.Item>
-                        <Dropdown.Item as="button">
-                            {!isLogin && (
-                                <li>
-                                    <Link to="/join">회원가입</Link>
-                                </li>
-                            )}
-                        </Dropdown.Item>
-                        <Dropdown.Item as="button">
-                            {!isLogin && (
-                                <li>
-                                    <Link to="/login">로그인</Link>
-                                </li>
-                            )}
-                            {isLogin && (
-                                <li onClick={handleClickLogoutBtn}>로그아웃</li>
-                            )}
-                        </Dropdown.Item>
+                            </Dropdown.Item>
+                        </Link>
+                        {!isLogin && (
+                            <li>
+                                <Link to="/join">
+                                    <Dropdown.Item as="button">
+                                        회원가입
+                                    </Dropdown.Item>
+                                </Link>
+                            </li>
+                        )}
+
+                        {!isLogin && (
+                            <li>
+                                <Link to="/login">
+                                    <Dropdown.Item as="button">
+                                        로그인
+                                    </Dropdown.Item>
+                                </Link>
+                            </li>
+                        )}
+                        {isLogin && (
+                            <li onClick={handleClickLogoutBtn}>
+                                <Dropdown.Item as="button">
+                                    로그아웃
+                                </Dropdown.Item>
+                            </li>
+                        )}
                     </DropdownButton>
                 </h1>
             </nav>
