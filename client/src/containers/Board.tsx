@@ -8,7 +8,6 @@ import { BASE_URL } from '../components/Common/Constants'
 import '../style/containers/Board.scss'
 
 const Board = (props: any) => {
-    console.log(1, props)
     const [category, setCategory] = useState([])
     const isLogin = Boolean(localStorage.getItem('sai-blog'))
     const fetchCategory = async () => {
@@ -32,7 +31,11 @@ const Board = (props: any) => {
             </ListGroup>
         </li>
     ))
-    const rowId = props.location.state.rowId
+    const state = props.location.state
+    const rowId = () => {
+        if (typeof state === 'object' && state.hasOwnProperty('rowId'))
+            return props.location.state.rowId
+    }
     return (
         <main className="main">
             <nav className="gnb_sub">
@@ -42,7 +45,7 @@ const Board = (props: any) => {
                             <Link to="/board/write">글쓰기</Link>
                         </li>
                     )}
-                    {rowId && (
+                    {rowId() && (
                         <li>
                             <Link
                                 to={{
@@ -54,7 +57,7 @@ const Board = (props: any) => {
                             </Link>
                         </li>
                     )}
-                    {!rowId && renderCategorys}
+                    {!rowId() && renderCategorys}
                 </ul>
             </nav>
             <article className="postingList">

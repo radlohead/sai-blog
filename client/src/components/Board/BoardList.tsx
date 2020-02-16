@@ -20,6 +20,10 @@ const BoardList = (
         }
     ])
     const state = props.location.state
+    const rowId = () => {
+        if (typeof state === 'object' && state.hasOwnProperty('rowId'))
+            return state.rowId
+    }
     useEffect(() => {
         if (typeof state !== 'object' || !state.hasOwnProperty('total')) return
         const fetchBoardList = async () => {
@@ -100,7 +104,7 @@ const BoardList = (
     return (
         <>
             <article>
-                {!state.rowId && <CardGroup>{renderBoardList()}</CardGroup>}
+                {!rowId() && <CardGroup>{renderBoardList()}</CardGroup>}
                 <div>
                     <Route path="/board/view/:rowId" component={BoardView} />
                 </div>
