@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { Link, Route } from 'react-router-dom'
 import axios from 'axios'
-import { ListGroup } from 'react-bootstrap'
+import { ListGroup, Button } from 'react-bootstrap'
 import BoardList from '../components/Board/BoardList'
 import BoardWrite from '../components/Board/BoardWrite'
 import { BASE_URL } from '../components/Common/Constants'
 import '../style/containers/Board.scss'
 
-const Board = () => {
+const Board = (props: any) => {
+    console.log(1, props)
     const [category, setCategory] = useState([])
     const isLogin = Boolean(localStorage.getItem('sai-blog'))
     const fetchCategory = async () => {
@@ -31,6 +32,7 @@ const Board = () => {
             </ListGroup>
         </li>
     ))
+    const rowId = props.location.state.rowId
     return (
         <main className="main">
             <nav className="gnb_sub">
@@ -40,7 +42,19 @@ const Board = () => {
                             <Link to="/board/write">글쓰기</Link>
                         </li>
                     )}
-                    {renderCategorys}
+                    {rowId && (
+                        <li>
+                            <Link
+                                to={{
+                                    pathname: '/board',
+                                    state: { total: true }
+                                }}
+                            >
+                                <Button variant="secondary">이전</Button>
+                            </Link>
+                        </li>
+                    )}
+                    {!rowId && renderCategorys}
                 </ul>
             </nav>
             <article className="postingList">

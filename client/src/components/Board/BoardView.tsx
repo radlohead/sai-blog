@@ -36,7 +36,6 @@ const BoardView = (props: RouteComponentProps<{ rowId: string }>) => {
 
     return (
         <div>
-            <h3>글보기</h3>
             <article>
                 <h4>{content.title}</h4>
                 <span>{content.id}</span>
