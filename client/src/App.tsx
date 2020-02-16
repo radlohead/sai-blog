@@ -6,7 +6,7 @@ import Join from './containers/Join'
 import Board from './containers/Board'
 import './style/App.scss'
 
-const App: React.FC = () => {
+const App: React.FC = (props: any) => {
     const isLogin = Boolean(localStorage.getItem('sai-blog'))
     const history = useHistory()
     useEffect(() => {
@@ -62,6 +62,15 @@ const App: React.FC = () => {
                                 <Dropdown.Item as="button">
                                     로그아웃
                                 </Dropdown.Item>
+                            </li>
+                        )}
+                        {isLogin && (
+                            <li>
+                                <Link to="/board/write">
+                                    <Dropdown.Item as="button">
+                                        글쓰기
+                                    </Dropdown.Item>
+                                </Link>
                             </li>
                         )}
                     </DropdownButton>

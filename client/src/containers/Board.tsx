@@ -8,8 +8,8 @@ import { BASE_URL } from '../components/Common/Constants'
 import '../style/containers/Board.scss'
 
 const Board = (props: any) => {
+    console.log(1, props)
     const [category, setCategory] = useState([])
-    const isLogin = Boolean(localStorage.getItem('sai-blog'))
     const fetchCategory = async () => {
         const responseData = await axios.get(`${BASE_URL}/board/category`)
         setCategory(responseData.data)
@@ -40,11 +40,6 @@ const Board = (props: any) => {
         <main className="main">
             <nav className="gnb_sub">
                 <ul>
-                    {isLogin && (
-                        <li>
-                            <Link to="/board/write">글쓰기</Link>
-                        </li>
-                    )}
                     {rowId() && (
                         <li>
                             <Link

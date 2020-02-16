@@ -72,29 +72,24 @@ const BoardList = (
         if (!boardList.length) return <li>현재 작성된 포스팅이 없습니다.</li>
         return boardList.map(item => (
             <Card key={item.createdAt}>
-                <Card.Img variant="top" src="holder.js/100px160" />
-                <Card.Body>
-                    <Card.Title>{item.title}</Card.Title>
-                    <Link
-                        to={{
-                            pathname: `/board/view/${item.rowId}`,
-                            state: { rowId: item.rowId }
-                        }}
-                    >
+                <Link
+                    to={{
+                        pathname: `/board/view/${item.rowId}`,
+                        state: { rowId: item.rowId }
+                    }}
+                >
+                    <Card.Img variant="top" src="holder.js/100px160" />
+                    <Card.Body>
+                        <Card.Title>{item.title}</Card.Title>
                         <ul>
                             <li>{item.category}</li>
                             <li>{item.id}</li>
-                            <li>
-                                {item.createdAt
-                                    .substr(0, 10)
-                                    .replace(/-/g, '.')}
-                            </li>
                         </ul>
-                    </Link>
-                </Card.Body>
+                    </Card.Body>
+                </Link>
                 <Card.Footer>
                     <small className="text-muted">
-                        Last updated 3 mins ago
+                        {item.createdAt.substr(0, 10).replace(/-/g, '.')}
                     </small>
                 </Card.Footer>
             </Card>
