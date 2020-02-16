@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link, Route } from 'react-router-dom'
+import { Link, Route, RouteComponentProps } from 'react-router-dom'
 import axios from 'axios'
 import { ListGroup, Button } from 'react-bootstrap'
 import BoardList from '../components/Board/BoardList'
@@ -7,8 +7,11 @@ import BoardWrite from '../components/Board/BoardWrite'
 import { BASE_URL } from '../components/Common/Constants'
 import '../style/containers/Board.scss'
 
-const Board = (props: any) => {
-    console.log(1, props)
+const Board = (
+    props:
+        | RouteComponentProps<{ [rowId: string]: string }>
+        | { [key: string]: any }
+) => {
     const [category, setCategory] = useState([])
     const fetchCategory = async () => {
         const responseData = await axios.get(`${BASE_URL}/board/category`)
@@ -42,14 +45,12 @@ const Board = (props: any) => {
                 <ul>
                     {rowId() && (
                         <li>
-                            <Link
-                                to={{
-                                    pathname: '/board',
-                                    state: { total: true }
-                                }}
+                            <Button
+                                variant="secondary"
+                                onClick={() => props.history.goBack()}
                             >
-                                <Button variant="secondary">이전</Button>
-                            </Link>
+                                이전
+                            </Button>
                         </li>
                     )}
                     {!rowId() && renderCategorys}

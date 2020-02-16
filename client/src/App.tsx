@@ -6,7 +6,7 @@ import Join from './containers/Join'
 import Board from './containers/Board'
 import './style/App.scss'
 
-const App: React.FC = (props: any) => {
+const App: React.FC = () => {
     const isLogin = Boolean(localStorage.getItem('sai-blog'))
     const history = useHistory()
     useEffect(() => {
