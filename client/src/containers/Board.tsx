@@ -13,6 +13,7 @@ const Board = (
         | { [key: string]: any }
 ) => {
     const [category, setCategory] = useState([])
+    const [toggleClass, setToggleClass] = useState('')
     const fetchCategory = async () => {
         const responseData = await axios.get(`${BASE_URL}/board/category`)
         setCategory(responseData.data)
@@ -21,7 +22,11 @@ const Board = (
         if (!category.length) fetchCategory()
     }, [category])
     const renderCategorys = category.map(category => (
-        <li key={category}>
+        <li
+            key={category}
+            className={category === toggleClass ? 'active' : ''}
+            onClick={() => setToggleClass(category)}
+        >
             <ListGroup>
                 <Link
                     to={{

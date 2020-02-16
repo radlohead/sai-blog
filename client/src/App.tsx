@@ -24,10 +24,7 @@ const App: React.FC = () => {
         <div className="root">
             <nav className="gnb">
                 <h1>
-                    <DropdownButton
-                        id="dropdown-item-button"
-                        title="Dropdown button"
-                    >
+                    <DropdownButton id="dropdown-item-button" title="내 메뉴">
                         <Link
                             to={{
                                 pathname: '/board',

@@ -1,6 +1,19 @@
 .main {
     display: flex;
     flex-direction: column;
+    .gnb_sub {
+        li {
+            &.active {
+                background-color: #007bff;
+                .list-group-item {
+                    color: #fff;
+                }
+            }
+        }
+    }
+    .list-group-item {
+        background-color: transparent;
+    }
     @media screen and (min-width: 500px) {
         flex-direction: row;
         .gnb_sub {

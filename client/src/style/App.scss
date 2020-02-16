@@ -3,3 +3,33 @@
 .root {
     position: relative;
 }
+.btn-primary {
+    box-shadow: none;
+    &:focus {
+        box-shadow: none;
+    }
+}
+.show {
+    .btn-primary {
+        box-shadow: none;
+        &:focus {
+            box-shadow: none;
+        }
+        &.dropdown-toggle {
+            border-color: #343a40;
+            background-color: #343a40;
+            box-shadow: none;
+            &:focus {
+                box-shadow: none;
+            }
+        }
+    }
+}
+.dropdown-toggle {
+    border-color: #343a40;
+    background-color: #343a40;
+    &:hover {
+        border-color: #343a40;
+        background-color: #343a40;
+    }
+}

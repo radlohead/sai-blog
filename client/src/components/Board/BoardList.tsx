@@ -78,7 +78,6 @@ const BoardList = (
                         state: { rowId: item.rowId }
                     }}
                 >
-                    <Card.Img variant="top" src="holder.js/100px160" />
                     <Card.Body>
                         <Card.Title>{item.title}</Card.Title>
                         <ul>
