@@ -107,7 +107,6 @@ const BoardWrite = () => {
 
     return (
         <div>
-            <h3>글쓰기</h3>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <select
                     name="category"

@@ -48,7 +48,7 @@ const Board = (
         <main className="main">
             <nav className="gnb_sub">
                 <ul>
-                    {rowId() && (
+                    {(rowId() || state.write) && (
                         <li>
                             <Button
                                 variant="secondary"
@@ -58,14 +58,16 @@ const Board = (
                             </Button>
                         </li>
                     )}
-                    {!rowId() && renderCategorys}
+                    {!rowId() && !state.write && renderCategorys}
                 </ul>
             </nav>
             <article className="postingList">
                 <ul>
-                    <li>
-                        <Route path="/board" component={BoardList} />
-                    </li>
+                    {!state.write && (
+                        <li>
+                            <Route path="/board" component={BoardList} />
+                        </li>
+                    )}
                     <li>
                         <Route path="/board/write" component={BoardWrite} />
                     </li>

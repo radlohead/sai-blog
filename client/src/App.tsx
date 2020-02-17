@@ -63,7 +63,12 @@ const App: React.FC = () => {
                         )}
                         {isLogin && (
                             <li>
-                                <Link to="/board/write">
+                                <Link
+                                    to={{
+                                        pathname: '/board/write',
+                                        state: { write: true }
+                                    }}
+                                >
                                     <Dropdown.Item as="button">
                                         글쓰기
                                     </Dropdown.Item>
