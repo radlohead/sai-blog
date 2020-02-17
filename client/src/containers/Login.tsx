@@ -26,10 +26,14 @@ const Join = () => {
             const setData: { id: string } = {
                 id
             }
-            localStorage.setItem('sai-blog', JSON.stringify(setData))
-            console.log('로그인 되었습니다.')
-            window.location.reload()
-            return responseData
+            if (responseData.data.RESP_CD === 200) {
+                localStorage.setItem('sai-blog', JSON.stringify(setData))
+                console.log('로그인 되었습니다.')
+                window.location.reload()
+                return responseData
+            } else {
+                console.log('이이디, 비밀번호를 다시 확인해주세요.')
+            }
         } catch (err) {
             console.log('로그인이 실패했습니다.')
             console.error(err)
@@ -51,6 +55,7 @@ const Join = () => {
             )}
 
             <input
+                type="password"
                 name="password"
                 ref={register({
                     required: 'Required',

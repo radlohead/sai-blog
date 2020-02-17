@@ -70,9 +70,13 @@ app.post('/login', (req, res, next) => {
                         console.error('로그인이 실패했습니다.')
                     } else if (!result) {
                         console.error('비밀번호가 틀렸습니다.')
+                        res.send({
+                            RESP_CD: 100,
+                            msg: '비밀번호가 틀렸습니다.'
+                        })
                     } else if (result) {
                         res.set('Content-Type', 'application/json')
-                        res.send({ status: 'SUCCESS' })
+                        res.send({ RESP_CD: 200, status: 'SUCCESS' })
                     }
                 }
             )
