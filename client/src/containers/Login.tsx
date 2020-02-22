@@ -1,14 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import { BASE_URL } from '../components/Common/Constants'
 
 type TLogin = {
-    id: string
-    password: string
+    id?: string
+    password?: string
 }
 
 const Join = () => {
+    const [error, setError] = useState<TLogin>({ id: '', password: '' })
     const { handleSubmit, register, errors } = useForm()
     const onSubmit = async ({
         id,
@@ -33,6 +34,7 @@ const Join = () => {
                 return responseData
             } else {
                 console.log('이이디, 비밀번호를 다시 확인해주세요.')
+                setError({ password: '이이디, 비밀번호를 다시 확인해주세요.' })
             }
         } catch (err) {
             console.log('로그인이 실패했습니다.')
@@ -63,6 +65,7 @@ const Join = () => {
                     maxLength: 20
                 })}
             />
+            {error.password && <span>{error.password}</span>}
             {errors.password && (
                 <span>비밀번호는 4글자 이상 20글자 이하로 입력해주세요.</span>
             )}
