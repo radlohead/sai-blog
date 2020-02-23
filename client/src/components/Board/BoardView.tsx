@@ -40,7 +40,9 @@ const BoardView = (props: RouteComponentProps<{ rowId: string }>) => {
                 <h4>{content.title}</h4>
                 <span>{content.id}</span>
                 <div dangerouslySetInnerHTML={createMarkUp()}></div>
-                <span>{content.createdAt}</span>
+                <span>
+                    {content.createdAt.substr(0, 10).replace(/-/g, '.')}
+                </span>
             </article>
         </div>
     )
